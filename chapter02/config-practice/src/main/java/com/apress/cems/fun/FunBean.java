@@ -42,7 +42,7 @@ import javax.annotation.PreDestroy;
  * Bean that is initialized using all three techniques supported in Spring
  */
 // TODO 12. Add initialization and destroy methods to implement all three techniques specified in the book
-public class FunBean /*implements InitializingBean, DisposableBean*/ {
+public class FunBean implements InitializingBean, DisposableBean {
     private Logger logger = LoggerFactory.getLogger(FunBean.class);
 
     private DepBean depBean;
@@ -58,4 +58,33 @@ public class FunBean /*implements InitializingBean, DisposableBean*/ {
     }
 
     // ..
+
+
+    @PostConstruct
+    private void init(){
+        logger.info("Stage 3: Calling the @PostConstruct");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        logger.info("Stage 4: Calling the afterPropertiesSet*");
+    }
+
+    private void beanInitMethod(){
+        logger.info("Stage 5: Calling the beanInit*");
+    }
+
+    @PreDestroy
+    private void destroyMethod(){
+        logger.info("Stage 6: Calling the @PreDestory");
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        logger.info("Stage 7: Calling the destroy()");
+    }
+
+    void beanDestroyMethod(){
+        logger.info("Stage 8: Calling the beanDestroy*");
+    }
 }
